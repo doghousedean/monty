@@ -1,9 +1,8 @@
 import random
 
 
-def new_game():
+def new_game(max_doors=3):
     doors = []
-    max_doors = 3
     [doors.append('zonk') for _ in range(0, random.randint(3, max_doors))]
     try:
         doors[random.randint(0, len(doors) - 1)] = 'car'
