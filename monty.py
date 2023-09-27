@@ -23,6 +23,7 @@ class Monty():
         self._doors = [Door() for _ in range(0, doors)]
         self._monty = None
         self._player = None
+        self._car = None
         self._choose_car()
         self._player_choice()
         self._set_monty()
@@ -34,6 +35,7 @@ class Monty():
     def _choose_car(self):
         car = self._random_door()
         self._doors[car] = Door('car')
+        self._car = self._doors[car]
 
     def _player_choice(self):
         self._player = self._doors[self._random_door()]
@@ -43,19 +45,20 @@ class Monty():
         return door
 
     def _set_monty(self):
-        self._monty = self._doors[self._random_door()]
-        while self._monty == self._player:
-            self._monty = self._doors[self._random_door()]
+        if self._player == self._car:
+            zonks = self._get_zonks()
+            self._monty = zonks[random.randint(0, len(zonks) - 1)]
+        else:
+            self._monty = self._car
 
     def _get_zonks(self):
         return [door for door in self._doors if door.type == 'zonk']
 
     def _open_remaining(self):
         doors = self._get_zonks()
-        doors.pop(doors.index(random.choice(doors)))
-        for each_door in doors:
-            if each_door != self._monty:
-                self._open_door(each_door)
+        # doors.pop(doors.index(random.choice(doors)))
+        for each_door in [door for door in doors if door != self._monty]:
+            self._open_door(each_door)
 
     def doors(self) -> list:
         return [repr(door) for door in self._doors]
@@ -63,12 +66,17 @@ class Monty():
 
 if __name__ == "__main__":
     max_runs = 1000
+    max_doors = 100
     wins = 0
     for _ in range(0, max_runs):
-        m = Monty()
+        m = Monty(max_doors)
         if m._monty.type == 'car':
             wins += 1
         print(
-            f"WINS: {wins} Player's Door: {m._player.type}, Monty's Door: {m._monty.type}")
-    print("="*45)
-    print(f"Won {(wins/max_runs) * 100}%")
+            f"Player's Door: {m._player.type}, Monty's Door: {m._monty.type}")
+        # print([door.type for door in m._doors])
+    print("="*60)
+    print(
+        f"Chances: Player: {(1/max_doors) * 100}% Always_switch: {(1-(1/max_doors)) * 100}%")
+    print(f"Win Rate {(wins/max_runs) * 100}%")
+    print("="*60)
