@@ -2,6 +2,7 @@
 Dammit this thing is driving me nuts
 """
 import random
+import time
 
 
 class Door():
@@ -61,23 +62,29 @@ class Monty():
             self._open_door(each_door)
 
     def doors(self) -> list:
-        return [repr(door) for door in self._doors]
+        return self._doors
 
 
-if __name__ == "__main__":
-    max_runs = 1000
-    max_doors = 100
+def game(max_runs=1000, max_doors=3):
     wins = 0
     for _ in range(0, max_runs):
         m = Monty(max_doors)
         if m._monty.type == 'car':
             wins += 1
-        print(
-            f"Player's Door: {m._player.type}, Monty's Door: {m._monty.type}")
-        # print([door.type for door in m._doors])
+        # print(
+            # f"Player's Door: {m._player.type}, Monty's Door: {m._monty.type}")
     print("="*60)
     print(f"Max Runs: {max_runs} Max Doors: {max_doors}")
     print(
-        f"Chances: Player: {(1/max_doors) * 100}% Always_switch: {(1-(1/max_doors)) * 100}%")
-    print(f"Win Rate {(wins/max_runs) * 100}%")
+        f"Chances: Player: {round((1/max_doors) * 100, 2)}% Always_switch: {round((1-(1/max_doors)) * 100, 2)}%")
+    print(f"Win Rate {round((wins/max_runs) * 100, 2)}%")
     print("="*60)
+
+
+if __name__ == "__main__":
+    while True:
+        try:
+            game()
+            time.sleep(0.1)
+        except KeyboardInterrupt:
+            break
