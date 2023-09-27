@@ -76,6 +76,7 @@ if __name__ == "__main__":
             f"Player's Door: {m._player.type}, Monty's Door: {m._monty.type}")
         # print([door.type for door in m._doors])
     print("="*60)
+    print(f"Max Runs: {max_runs} Max Doors: {max_doors}")
     print(
         f"Chances: Player: {(1/max_doors) * 100}% Always_switch: {(1-(1/max_doors)) * 100}%")
     print(f"Win Rate {(wins/max_runs) * 100}%")
