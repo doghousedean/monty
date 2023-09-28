@@ -1,5 +1,13 @@
 """
-Dammit this thing is driving me nuts
+Dammit this thing is driving me nuts, Python version of the Monty Hall problem
+as described by Numberphile: https://youtu.be/4Lb-6rxZxx0
+
+
+Authors:
+    Dean Moore
+    Siobhan Cardus
+    
+27/09/2023    
 """
 import random
 import time
@@ -100,11 +108,11 @@ if __name__ == "__main__":
     # Hit CTRL+c to quit
     while True:
         try:
-            game()
+            game(max_doors=100)
             time.sleep(0.1)
         except KeyboardInterrupt:
             print()
             print("="*60)
-            print(f"🚗🚗🚗           How many cars did you win?          🚗🚗🚗")
+            print("🚗🚗🚗           How many cars did you win?          🚗🚗🚗")
             print("="*60)
             break
